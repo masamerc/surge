@@ -83,11 +83,9 @@ jspm_packages/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
-public
 
 # Storybook build outputs
 .out
@@ -96,6 +94,9 @@ public
 # Temporary folders
 tmp/
 temp/
+
+# Task runner cache
+.task/
 
 # Editor directories and files
 .vscode/*

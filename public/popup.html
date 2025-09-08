@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surge</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      margin: 0;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4CAF50;
+      margin-bottom: 5px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+    .controls {
+      margin: 20px 0;
+    }
+    .control-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .switch {
+      position: relative;
+      width: 50px;
+      height: 24px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    .status {
+      text-align: center;
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .status.active {
+      background-color: #e8f5e8;
+      color: #2e7d32;
+    }
+    .status.inactive {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+    .options-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .options-link a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">Surge</div>
+    <div class="subtitle">Stand Up Reminder</div>
+  </div>
+  
+  <div class="controls">
+    <div class="control-group">
+      <div class="toggle">
+        <label for="enabled">Enable Reminders</label>
+        <div class="switch">
+          <input type="checkbox" id="enabled">
+          <span class="slider"></span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <label for="interval">Reminder Interval</label>
+      <select id="interval">
+        <option value="15">15 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="45">45 minutes</option>
+        <option value="60">1 hour</option>
+        <option value="90">1.5 hours</option>
+        <option value="120">2 hours</option>
+      </select>
+    </div>
+  </div>
+  
+  <div id="status" class="status"></div>
+  
+  <div class="options-link">
+    <a href="#" id="openOptions">Advanced Options</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
