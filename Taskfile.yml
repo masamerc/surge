@@ -1,0 +1,87 @@
+version: '3'
+
+vars:
+  DIST_DIR: './dist'
+  SRC_DIR: './src'
+  PUBLIC_DIR: './public'
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - npm install
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - rm -rf {{.DIST_DIR}}/*
+      - mkdir -p {{.DIST_DIR}}
+
+  build:
+    desc: Build the extension for production
+    deps: [clean]
+    cmds:
+      - npm run build
+    sources:
+      - "{{.SRC_DIR}}/**/*.ts"
+      - "{{.PUBLIC_DIR}}/**/*"
+      - tsconfig.json
+      - webpack.config.js
+    generates:
+      - "{{.DIST_DIR}}/**/*"
+
+  dev:
+    desc: Build and watch for development
+    deps: [clean]
+    cmds:
+      - npm run dev
+
+  type-check:
+    desc: Run TypeScript type checking
+    cmds:
+      - npm run type-check
+
+  lint:
+    desc: Run linting (if configured)
+    cmds:
+      - echo "No linter configured. Consider adding ESLint."
+
+  test:
+    desc: Run tests (if configured)
+    cmds:
+      - echo "No tests configured. Consider adding Jest or similar."
+
+  package:
+    desc: Package the extension for distribution
+    deps: [build]
+    cmds:
+      - cd {{.DIST_DIR}} && zip -r ../surge-extension.zip .
+      - echo "Extension packaged as surge-extension.zip"
+
+  load-extension:
+    desc: Instructions to load extension in Chrome
+    cmds:
+      - echo "To load the extension in Chrome:"
+      - echo "1. Open Chrome and go to chrome://extensions/"
+      - echo "2. Enable 'Developer mode' in the top-right corner"
+      - echo "3. Click 'Load unpacked' and select the './dist' folder"
+      - echo "4. The Surge extension should now be loaded!"
+
+  dev-setup:
+    desc: Complete development setup
+    cmds:
+      - task: install
+      - task: build
+      - task: load-extension
+
+  validate:
+    desc: Run all validation checks
+    cmds:
+      - task: type-check
+      - task: lint
+      - task: build
+
+  help:
+    desc: Show available tasks
+    cmds:
+      - task --list
