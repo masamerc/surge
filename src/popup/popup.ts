@@ -2,30 +2,34 @@ interface SurgeConfig {
   interval: number;
   enabled: boolean;
   nextAlarmTime?: number;
+  customMessage?: string;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const enabledToggle = document.getElementById('enabled') as HTMLInputElement;
   const intervalSelect = document.getElementById('interval') as HTMLSelectElement;
   const statusDiv = document.getElementById('status') as HTMLDivElement;
-  const openOptionsLink = document.getElementById('openOptions') as HTMLAnchorElement;
   const countdownDiv = document.getElementById('countdown') as HTMLDivElement;
   const countdownTimeDiv = document.getElementById('countdownTime') as HTMLDivElement;
+  const customMessageTextarea = document.getElementById('customMessage') as HTMLTextAreaElement;
+  const refreshButton = document.getElementById('refreshTimer') as HTMLButtonElement;
   
   let countdownInterval: NodeJS.Timeout;
 
   loadConfigAndUpdateUI();
 
   function loadConfigAndUpdateUI(): void {
-    chrome.storage.sync.get(['interval', 'enabled', 'nextAlarmTime'], (result) => {
+    chrome.storage.sync.get(['interval', 'enabled', 'nextAlarmTime', 'customMessage'], (result) => {
       const config: SurgeConfig = {
         interval: result.interval || 30,
         enabled: result.enabled !== false,
-        nextAlarmTime: result.nextAlarmTime
+        nextAlarmTime: result.nextAlarmTime,
+        customMessage: result.customMessage || ''
       };
       
       enabledToggle.checked = config.enabled;
       intervalSelect.value = config.interval.toString();
+      customMessageTextarea.value = config.customMessage || '';
       updateStatus(config);
       startCountdown(config);
     });
@@ -45,9 +49,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  openOptionsLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    chrome.runtime.openOptionsPage();
+  customMessageTextarea.addEventListener('input', () => {
+    const customMessage = customMessageTextarea.value.trim();
+    chrome.storage.sync.set({ customMessage: customMessage || undefined });
+  });
+
+  refreshButton.addEventListener('click', () => {
+    refreshButton.disabled = true;
+    refreshButton.textContent = '🔄 Restarting...';
+    
+    chrome.storage.sync.get(['interval', 'enabled'], (result) => {
+      if (result.enabled !== false) {
+        const interval = result.interval || 30;
+        // Force restart the alarm by setting a new nextAlarmTime
+        const nextAlarmTime = Date.now() + (interval * 60 * 1000);
+        chrome.storage.sync.set({ nextAlarmTime }, () => {
+          // Send message to background to restart alarm
+          chrome.runtime.sendMessage({ action: 'restartAlarm', interval }, () => {
+            setTimeout(() => {
+              refreshButton.disabled = false;
+              refreshButton.textContent = '🔄 Restart Timer';
+              loadConfigAndUpdateUI();
+            }, 500);
+          });
+        });
+      } else {
+        setTimeout(() => {
+          refreshButton.disabled = false;
+          refreshButton.textContent = '🔄 Restart Timer';
+        }, 500);
+      }
+    });
   });
 
   function startCountdown(config: SurgeConfig): void {

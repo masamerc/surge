@@ -129,14 +129,52 @@
     .countdown.active .countdown-time {
       color: #2e7d32;
     }
-    .options-link {
-      text-align: center;
-      margin-top: 15px;
+    .advanced-settings {
+      margin: 15px 0;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid #4CAF50;
     }
-    .options-link a {
-      color: #4CAF50;
-      text-decoration: none;
+    .advanced-settings h4 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: #333;
+      font-weight: 600;
+    }
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      height: 60px;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 13px;
+    }
+    .description {
+      color: #666;
       font-size: 12px;
+      margin-top: 5px;
+    }
+    .refresh-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-top: 10px;
+      width: 100%;
+      font-weight: 500;
+    }
+    .refresh-button:hover {
+      background-color: #45a049;
+    }
+    .refresh-button:active {
+      background-color: #3d8b40;
     }
   </style>
 </head>
@@ -161,6 +199,7 @@
       <label for="interval">Reminder Interval</label>
       <select id="interval">
         <option value="5">5 minutes</option>
+        <option value="10">10 minutes</option>
         <option value="15">15 minutes</option>
         <option value="30">30 minutes</option>
         <option value="45">45 minutes</option>
@@ -169,6 +208,8 @@
         <option value="120">2 hours</option>
       </select>
     </div>
+    
+    <button id="refreshTimer" class="refresh-button">🔄 Restart Timer</button>
   </div>
   
   <div id="countdown" class="countdown">
@@ -176,11 +217,13 @@
     <div id="countdownTime" class="countdown-time">--:--</div>
   </div>
   
-  <div id="status" class="status"></div>
-  
-  <div class="options-link">
-    <a href="#" id="openOptions">Advanced Options</a>
+  <div class="advanced-settings">
+    <h4>Custom Message</h4>
+    <textarea id="customMessage" placeholder="Enter your custom reminder message..."></textarea>
+    <div class="description">Customize the reminder message (leave blank for default)</div>
   </div>
+  
+  <div id="status" class="status"></div>
 
   <script src="popup.js"></script>
 </body>

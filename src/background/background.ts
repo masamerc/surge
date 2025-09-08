@@ -2,6 +2,7 @@ interface SurgeConfig {
   interval: number;
   enabled: boolean;
   nextAlarmTime?: number;
+  customMessage?: string;
 }
 
 const DEFAULT_INTERVAL = 30; // 30 minutes
@@ -13,6 +14,15 @@ chrome.runtime.onInstalled.addListener(() => {
   });
   
   setupAlarm(DEFAULT_INTERVAL);
+});
+
+// Handle messages from popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'restartAlarm') {
+    setupAlarm(request.interval);
+    sendResponse({ success: true });
+  }
+  return true;
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -60,16 +70,19 @@ function setupAlarm(intervalMinutes: number): void {
 }
 
 function showStandUpNotification(): void {
-  chrome.notifications.create({
-    type: 'basic',
-    iconUrl: 'icons/icon48.png',
-    title: 'Surge - Time to Stand Up!',
-    message: 'It\'s been a while since your last break. Take a moment to stand up and stretch!',
-    buttons: [
-      { title: 'Done' },
-      { title: 'Snooze 5 min' }
-    ]
-  }, (notificationId) => {
+  chrome.storage.sync.get(['customMessage'], (result) => {
+    const message = result.customMessage || 'It\'s been a while since your last break. Take a moment to stand up and stretch!';
+    
+    chrome.notifications.create({
+      type: 'basic',
+      iconUrl: 'icons/icon48.png',
+      title: 'Surge - Time to Stand Up!',
+      message: message,
+      buttons: [
+        { title: 'Done' },
+        { title: 'Snooze 5 min' }
+      ]
+    }, (notificationId) => {
     chrome.notifications.onButtonClicked.addListener((id, buttonIndex) => {
       if (id === notificationId) {
         if (buttonIndex === 1) { // Snooze
@@ -87,6 +100,7 @@ function showStandUpNotification(): void {
       if (id === notificationId) {
         chrome.notifications.clear(id);
       }
+    });
     });
   });
 }
