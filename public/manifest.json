@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Surge",
   "version": "1.0.0",
-  "description": "Alerts you at regular intervals.",
+  "description": "Alerts you with a custom message at regular intervals.",
   "permissions": [
     "storage",
     "alarms",

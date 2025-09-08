@@ -1,7 +1,7 @@
 {
   "name": "surge",
   "version": "1.0.0",
-  "description": "A Chrome extension that reminds you to stand up at regular intervals",
+  "description": "A Chrome extension that just alerts you with a custom message at regular intervals",
   "main": "index.js",
   "scripts": {
     "build": "tsc && webpack --mode=production",
