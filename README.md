@@ -1,15 +1,16 @@
-# Surge - Stand Up Reminder Chrome Extension
+# Surge - Recurring Alert Chrome Extension
 
-A TypeScript-powered Chrome extension that reminds you to stand up and take breaks at regular intervals.
+A TypeScript-powered Chrome extension that provides customizable recurring alerts at regular intervals.
 
 ## Features
 
-- 🕐 Customizable reminder intervals (5 minutes to 8 hours)
-- 🔔 Desktop notifications with snooze functionality
-- ⚙️ Easy-to-use popup interface
-- 🎛️ Advanced options page for customization
-- 💾 Settings persist across browser sessions
-- 🎯 Clean, modern UI
+- Customizable reminder intervals (5 minutes to 2 hours via popup, up to 8 hours via custom input)
+- Desktop notifications with snooze functionality
+- Consolidated popup interface with all settings
+- Live countdown timer showing time until next alert
+- Custom notification messages
+- Settings persist across browser sessions
+- Clean, modern UI with golden yellow theme
 
 ## Development
 
@@ -32,7 +33,7 @@ This project uses [Task](https://taskfile.dev/) as a task runner for easy develo
    - Open Chrome and navigate to `chrome://extensions/`
    - Enable "Developer mode" in the top-right corner
    - Click "Load unpacked" and select the `./dist` folder
-   - The Surge extension should now appear in your extensions!
+   - The Surge extension should now appear in your extensions
 
 ### Available Tasks
 
@@ -76,8 +77,7 @@ This project uses [Task](https://taskfile.dev/) as a task runner for easy develo
 surge/
 ├── src/
 │   ├── background/       # Service worker scripts
-│   ├── popup/           # Extension popup interface  
-│   └── options/         # Options page
+│   └── popup/           # Extension popup interface  
 ├── public/              # Static files (HTML, manifest, icons)
 ├── dist/                # Built extension files
 ├── Taskfile.yml         # Task definitions
@@ -91,17 +91,16 @@ surge/
 1. **Background Service Worker** (`src/background/background.ts`):
    - Manages alarms and notifications
    - Handles user settings changes
-   - Shows stand-up reminders at configured intervals
+   - Shows recurring alerts at configured intervals
+   - Supports custom notification messages
 
 2. **Popup Interface** (`src/popup/popup.ts`):
-   - Quick settings toggle
+   - Consolidated settings interface
+   - Live countdown timer
+   - Enable/disable toggle
    - Interval selection
-   - Status display
-
-3. **Options Page** (`src/options/options.ts`):
-   - Advanced configuration
-   - Custom reminder messages
-   - Detailed settings
+   - Custom message configuration
+   - Timer restart functionality
 
 ## Configuration
 
