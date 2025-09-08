@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Surge - Stand Up Reminder",
+  "name": "Surge - Just a Recurring Alert",
   "version": "1.0.0",
-  "description": "A Chrome extension that reminds you to stand up at regular intervals",
+  "description": "A Chrome extension that just alerts you at regular intervals",
   "permissions": [
     "storage",
     "alarms",
@@ -13,7 +13,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Surge - Stand Up Reminder"
+    "default_title": "Surge - Just a Recurring Alert"
   },
   "icons": {
     "16": "icons/icon16.png",
