@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   refreshButton.addEventListener('click', () => {
     refreshButton.disabled = true;
-    refreshButton.textContent = '🔄 Restarting...';
+    refreshButton.textContent = 'Restarting...';
     
     chrome.storage.sync.get(['interval', 'enabled'], (result) => {
       if (result.enabled !== false) {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
           chrome.runtime.sendMessage({ action: 'restartAlarm', interval }, () => {
             setTimeout(() => {
               refreshButton.disabled = false;
-              refreshButton.textContent = '🔄 Restart Timer';
+              refreshButton.textContent = 'Restart Timer';
               loadConfigAndUpdateUI();
             }, 500);
           });
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         setTimeout(() => {
           refreshButton.disabled = false;
-          refreshButton.textContent = '🔄 Restart Timer';
+          refreshButton.textContent = 'Restart Timer';
         }, 500);
       }
     });
