@@ -35,8 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   enabledToggle.addEventListener('change', () => {
     const enabled = enabledToggle.checked;
+    
+    // Immediately update UI for responsive feedback
+    if (!enabled) {
+      countdownDiv.className = 'countdown';
+      countdownTimeDiv.textContent = '--:--';
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+    }
+    
     chrome.storage.sync.set({ enabled }, () => {
-      loadConfigAndUpdateUI();
+      // Small delay to let background script process the change
+      setTimeout(() => {
+        loadConfigAndUpdateUI();
+      }, 100);
     });
   });
 
