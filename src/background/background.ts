@@ -71,7 +71,7 @@ function setupAlarm(intervalMinutes: number): void {
 
 function showStandUpNotification(): void {
   chrome.storage.sync.get(['customMessage'], (result) => {
-    const message = result.customMessage || 'It\'s been a while since your last break. Take a moment to stand up and stretch!';
+    const message = result.customMessage || 'Greetings from Surge.';
     
     chrome.notifications.create({
       type: 'basic',
