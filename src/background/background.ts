@@ -1,6 +1,7 @@
 interface SurgeConfig {
   interval: number;
   enabled: boolean;
+  nextAlarmTime?: number;
 }
 
 const DEFAULT_INTERVAL = 30; // 30 minutes
@@ -17,6 +18,12 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === 'standUpReminder') {
     showStandUpNotification();
+    // Update next alarm time for the next interval
+    chrome.storage.sync.get(['interval'], (result) => {
+      const intervalMinutes = result.interval || DEFAULT_INTERVAL;
+      const nextAlarmTime = Date.now() + (intervalMinutes * 60 * 1000);
+      chrome.storage.sync.set({ nextAlarmTime });
+    });
   }
 });
 
@@ -33,6 +40,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
           setupAlarm(config.interval);
         } else {
           chrome.alarms.clear('standUpReminder');
+          chrome.storage.sync.set({ nextAlarmTime: null });
         }
       });
     }
@@ -41,6 +49,9 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
 function setupAlarm(intervalMinutes: number): void {
   chrome.alarms.clear('standUpReminder', () => {
+    const nextAlarmTime = Date.now() + (intervalMinutes * 60 * 1000);
+    chrome.storage.sync.set({ nextAlarmTime });
+    
     chrome.alarms.create('standUpReminder', {
       delayInMinutes: intervalMinutes,
       periodInMinutes: intervalMinutes
@@ -62,6 +73,8 @@ function showStandUpNotification(): void {
     chrome.notifications.onButtonClicked.addListener((id, buttonIndex) => {
       if (id === notificationId) {
         if (buttonIndex === 1) { // Snooze
+          const nextAlarmTime = Date.now() + (5 * 60 * 1000);
+          chrome.storage.sync.set({ nextAlarmTime });
           chrome.alarms.create('standUpReminder', {
             delayInMinutes: 5
           });

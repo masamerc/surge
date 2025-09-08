@@ -101,6 +101,34 @@
       background-color: #ffebee;
       color: #c62828;
     }
+    .countdown {
+      text-align: center;
+      margin: 15px 0;
+      padding: 15px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+    }
+    .countdown.active {
+      background-color: #e8f5e8;
+      border-color: #4CAF50;
+    }
+    .countdown-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .countdown-time {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      font-family: 'Courier New', monospace;
+    }
+    .countdown.active .countdown-time {
+      color: #2e7d32;
+    }
     .options-link {
       text-align: center;
       margin-top: 15px;
@@ -132,6 +160,7 @@
     <div class="control-group">
       <label for="interval">Reminder Interval</label>
       <select id="interval">
+        <option value="5">5 minutes</option>
         <option value="15">15 minutes</option>
         <option value="30">30 minutes</option>
         <option value="45">45 minutes</option>
@@ -140,6 +169,11 @@
         <option value="120">2 hours</option>
       </select>
     </div>
+  </div>
+  
+  <div id="countdown" class="countdown">
+    <div class="countdown-label">Next Reminder In</div>
+    <div id="countdownTime" class="countdown-time">--:--</div>
   </div>
   
   <div id="status" class="status"></div>
