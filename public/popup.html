@@ -86,21 +86,6 @@
     input:checked + .slider:before {
       transform: translateX(26px);
     }
-    .status {
-      text-align: center;
-      padding: 10px;
-      border-radius: 4px;
-      margin-top: 15px;
-      font-size: 14px;
-    }
-    .status.active {
-      background-color: #FFF8DC;
-      color: #B8860B;
-    }
-    .status.inactive {
-      background-color: #ffebee;
-      color: #c62828;
-    }
     .countdown {
       text-align: center;
       margin: 15px 0;
@@ -209,7 +194,7 @@
       </select>
     </div>
     
-    <button id="refreshTimer" class="refresh-button">🔄 Restart Timer</button>
+    <button id="refreshTimer" class="refresh-button">Restart Timer</button>
   </div>
   
   <div id="countdown" class="countdown">
@@ -222,8 +207,6 @@
     <textarea id="customMessage" placeholder="Enter your custom reminder message..."></textarea>
     <div class="description">Customize the reminder message (leave blank for default)</div>
   </div>
-  
-  <div id="status" class="status"></div>
 
   <script src="popup.js"></script>
 </body>

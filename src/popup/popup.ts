@@ -8,7 +8,6 @@ interface SurgeConfig {
 document.addEventListener('DOMContentLoaded', () => {
   const enabledToggle = document.getElementById('enabled') as HTMLInputElement;
   const intervalSelect = document.getElementById('interval') as HTMLSelectElement;
-  const statusDiv = document.getElementById('status') as HTMLDivElement;
   const countdownDiv = document.getElementById('countdown') as HTMLDivElement;
   const countdownTimeDiv = document.getElementById('countdownTime') as HTMLDivElement;
   const customMessageTextarea = document.getElementById('customMessage') as HTMLTextAreaElement;
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
       enabledToggle.checked = config.enabled;
       intervalSelect.value = config.interval.toString();
       customMessageTextarea.value = config.customMessage || '';
-      updateStatus(config);
       startCountdown(config);
     });
   }
@@ -125,15 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     countdownTimeDiv.textContent = displayText;
   }
 
-  function updateStatus(config: SurgeConfig): void {
-    if (config.enabled) {
-      statusDiv.textContent = `Active - Interval: ${config.interval} minutes`;
-      statusDiv.className = 'status active';
-    } else {
-      statusDiv.textContent = 'Inactive - Reminders are disabled';
-      statusDiv.className = 'status inactive';
-    }
-  }
 
   // Clean up interval when popup closes
   window.addEventListener('beforeunload', () => {
