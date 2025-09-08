@@ -54,9 +54,12 @@
       height: 24px;
     }
     .switch input {
+      position: absolute;
       opacity: 0;
-      width: 0;
-      height: 0;
+      cursor: pointer;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
     }
     .slider {
       position: absolute;
@@ -171,7 +174,7 @@
   <div class="controls">
     <div class="control-group">
       <div class="toggle">
-        <label for="enabled">Enable Reminders</label>
+        <label for="enabled" style="cursor: pointer;">Enable Reminders</label>
         <div class="switch">
           <input type="checkbox" id="enabled">
           <span class="slider"></span>
