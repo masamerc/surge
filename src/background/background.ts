@@ -41,14 +41,21 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   if (namespace === 'sync') {
     if (changes.interval || changes.enabled) {
       chrome.storage.sync.get(['interval', 'enabled'], (result) => {
+        // Be explicit about enabled state
+        const enabled = result.enabled === undefined || result.enabled === null ? true : result.enabled;
+        
         const config: SurgeConfig = {
           interval: result.interval || DEFAULT_INTERVAL,
-          enabled: result.enabled !== false
+          enabled: enabled
         };
         
+        console.log('Background: config changed, enabled:', config.enabled);
+        
         if (config.enabled) {
+          console.log('Background: Setting up alarm for', config.interval, 'minutes');
           setupAlarm(config.interval);
         } else {
+          console.log('Background: Clearing alarms');
           chrome.alarms.clear('standUpReminder');
           chrome.storage.sync.set({ nextAlarmTime: null });
         }

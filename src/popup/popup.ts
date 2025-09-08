@@ -19,9 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function loadConfigAndUpdateUI(): void {
     chrome.storage.sync.get(['interval', 'enabled', 'nextAlarmTime', 'customMessage'], (result) => {
+      // Be explicit about enabled state - default to true if undefined/null
+      const enabled = result.enabled === undefined || result.enabled === null ? true : result.enabled;
+      
       const config: SurgeConfig = {
         interval: result.interval || 30,
-        enabled: result.enabled !== false,
+        enabled: enabled,
         nextAlarmTime: result.nextAlarmTime,
         customMessage: result.customMessage || ''
       };
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   enabledToggle.addEventListener('change', () => {
     const enabled = enabledToggle.checked;
+    console.log('Toggle changed to:', enabled);
     
     // Immediately update UI for responsive feedback
     if (!enabled) {
@@ -45,11 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     
-    chrome.storage.sync.set({ enabled }, () => {
-      // Small delay to let background script process the change
+    // Save the enabled state
+    chrome.storage.sync.set({ enabled: enabled }, () => {
+      console.log('Saved enabled state:', enabled);
+      // Reload UI after a brief delay
       setTimeout(() => {
         loadConfigAndUpdateUI();
-      }, 100);
+      }, 200);
     });
   });
 
