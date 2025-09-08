@@ -174,7 +174,7 @@
   <div class="controls">
     <div class="control-group">
       <div class="toggle">
-        <label for="enabled" style="cursor: pointer;">Enable Reminders</label>
+        <label for="enabled" style="cursor: pointer;">Enable</label>
         <div class="switch">
           <input type="checkbox" id="enabled">
           <span class="slider"></span>
@@ -183,8 +183,9 @@
     </div>
     
     <div class="control-group">
-      <label for="interval">Reminder Interval</label>
+      <label for="interval">Interval</label>
       <select id="interval">
+        <option value="1">1 minute</option>
         <option value="5">5 minutes</option>
         <option value="10">10 minutes</option>
         <option value="15">15 minutes</option>
@@ -200,14 +201,14 @@
   </div>
   
   <div id="countdown" class="countdown">
-    <div class="countdown-label">Next Reminder In</div>
+    <div class="countdown-label">Next Alert In</div>
     <div id="countdownTime" class="countdown-time">--:--</div>
   </div>
   
   <div class="advanced-settings">
     <h4>Custom Message</h4>
-    <textarea id="customMessage" placeholder="Enter your custom reminder message..."></textarea>
-    <div class="description">Customize the reminder message (leave blank for default)</div>
+    <textarea id="customMessage" placeholder="Enter your custom alert message..."></textarea>
+    <div class="description">Customize the alert message (leave blank for default)</div>
   </div>
 
   <script src="popup.js"></script>

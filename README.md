@@ -4,7 +4,7 @@ A TypeScript-powered Chrome extension that provides customizable recurring alert
 
 ## Features
 
-- Customizable reminder intervals (5 minutes to 2 hours via popup, up to 8 hours via custom input)
+- Customizable alert intervals (1 minute to 2 hours via popup, up to 8 hours via custom input)
 - Desktop notifications with snooze functionality
 - Consolidated popup interface with all settings
 - Live countdown timer showing time until next alert
@@ -105,9 +105,9 @@ surge/
 ## Configuration
 
 The extension stores settings in Chrome's sync storage:
-- `enabled`: Boolean to enable/disable reminders
-- `interval`: Number of minutes between reminders
-- `customMessage`: Optional custom reminder text
+- `enabled`: Boolean to enable/disable alerts
+- `interval`: Number of minutes between alerts
+- `customMessage`: Optional custom alert text
 
 ## Publishing
 

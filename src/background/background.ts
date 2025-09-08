@@ -26,8 +26,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === 'standUpReminder') {
-    showStandUpNotification();
+  if (alarm.name === 'surgeAlert') {
+    showAlert();
     // Update next alarm time for the next interval
     chrome.storage.sync.get(['interval'], (result) => {
       const intervalMinutes = result.interval || DEFAULT_INTERVAL;
@@ -56,7 +56,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
           setupAlarm(config.interval);
         } else {
           console.log('Background: Clearing alarms');
-          chrome.alarms.clear('standUpReminder');
+          chrome.alarms.clear('surgeAlert');
           chrome.storage.sync.set({ nextAlarmTime: null });
         }
       });
@@ -65,25 +65,25 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 });
 
 function setupAlarm(intervalMinutes: number): void {
-  chrome.alarms.clear('standUpReminder', () => {
+  chrome.alarms.clear('surgeAlert', () => {
     const nextAlarmTime = Date.now() + (intervalMinutes * 60 * 1000);
     chrome.storage.sync.set({ nextAlarmTime });
     
-    chrome.alarms.create('standUpReminder', {
+    chrome.alarms.create('surgeAlert', {
       delayInMinutes: intervalMinutes,
       periodInMinutes: intervalMinutes
     });
   });
 }
 
-function showStandUpNotification(): void {
+function showAlert(): void {
   chrome.storage.sync.get(['customMessage'], (result) => {
-    const message = result.customMessage || 'Greetings from Surge.';
+    const message = result.customMessage || 'Alert from Surge.';
     
     chrome.notifications.create({
       type: 'basic',
       iconUrl: 'icons/icon48.png',
-      title: 'Surge - Time to Stand Up!',
+      title: 'Surge Alert',
       message: message,
       buttons: [
         { title: 'Done' },
@@ -95,7 +95,7 @@ function showStandUpNotification(): void {
         if (buttonIndex === 1) { // Snooze
           const nextAlarmTime = Date.now() + (5 * 60 * 1000);
           chrome.storage.sync.set({ nextAlarmTime });
-          chrome.alarms.create('standUpReminder', {
+          chrome.alarms.create('surgeAlert', {
             delayInMinutes: 5
           });
         }
