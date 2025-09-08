@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Surge - Just a Recurring Alert",
+  "name": "Surge",
   "version": "1.0.0",
-  "description": "A Chrome extension that just alerts you at regular intervals",
+  "description": "Alerts you at regular intervals",
   "permissions": [
     "storage",
     "alarms",
@@ -13,7 +13,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Surge - Just a Recurring Alert"
+    "default_title": "Surge"
   },
   "icons": {
     "16": "icons/icon16.png",
