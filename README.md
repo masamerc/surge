@@ -3,6 +3,7 @@
 A TypeScript Chrome extension for customizable recurring alerts.
 
 Main developer: Claude Code
+
 Copilot: me
 
 ## Features
