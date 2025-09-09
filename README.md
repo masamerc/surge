@@ -2,10 +2,6 @@
 
 A TypeScript Chrome extension for customizable recurring alerts.
 
-Main developer: Claude Code
-
-Copilot: me
-
 ## Features
 
 - Customizable intervals (1 min - 2 hours)
@@ -43,6 +39,13 @@ src/
 public/           # Static assets
 dist/            # Built files
 ```
+
+## Developers
+
+* **Main developer**: Claude Code
+
+* **Copilot**: me | Masa Fukui
+
 
 ## License
 
