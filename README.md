@@ -1,6 +1,6 @@
 # Surge
 
-A TypeScript Chrome extension for customizable recurring alerts.
+A TypeScript Chrome extension for customizable recurring alerts available for download at https://chromewebstore.google.com/detail/surge/ibjjggocgibckdcgdpnfggmfagcfhgmn
 
 ## Features
 
